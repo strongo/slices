@@ -15,12 +15,12 @@ func FilterInt64s(source, remove []int64) (result []int64, changed bool) {
 	return
 }
 
-func RemoveStrings(source, remove []string) (result []string, changed bool) {
+func RemoveStrings(source, remove []string) (result []string, removed int) {
 	result = make([]string, 0, len(source) - len(remove))
 	for _, s := range source {
 		for _, r := range remove {
 			if s == r {
-				changed = true
+				removed++
 				goto next
 			}
 		}

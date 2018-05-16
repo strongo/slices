@@ -6,26 +6,28 @@ func TestRemoveStrings(t *testing.T) {
 	t.Parallel()
 	s := []string{"v1", "v2", "v3"}
 
-	for _, expects := range []struct {
-		changed bool
+	for _, testCase := range []struct {
+		removed int
+		source []string
 		remove []string
 		result []string
 	} {
-		{changed: false, remove: []string{}, result: s},
-		{changed: false, remove: []string{"v0"}, result: s},
-		{changed: true, remove: []string{"v1"}, result: []string{"v2", "v3"}},
-		{changed: true, remove: []string{"v2"}, result: []string{"v1", "v3"}},
-		{changed: true, remove: []string{"v3"}, result: []string{"v1", "v2"}},
-		{changed: true, remove: []string{"v1", "v2"}, result: []string{"v3"}},
-		{changed: true, remove: []string{"v1", "v3"}, result: []string{"v2"}},
-		{changed: true, remove: []string{"v2", "v3"}, result: []string{"v1"}},
+		{removed: 0, source: s, remove: []string{}, result: s},
+		{removed: 0, source: s, remove: []string{"v0"}, result: s},
+		{removed: 1, source: s, remove: []string{"v1"}, result: []string{"v2", "v3"}},
+		{removed: 1, source: s, remove: []string{"v2"}, result: []string{"v1", "v3"}},
+		{removed: 1, source: s, remove: []string{"v3"}, result: []string{"v1", "v2"}},
+		{removed: 2, source: s, remove: []string{"v1", "v2"}, result: []string{"v3"}},
+		{removed: 2, source: s, remove: []string{"v1", "v3"}, result: []string{"v2"}},
+		{removed: 2, source: s, remove: []string{"v2", "v3"}, result: []string{"v1"}},
+		{removed: 4, source: []string{"v1", "v2", "v2", "v3", "v2", "v2"}, remove: []string{"v2", }, result: []string{"v1", "v3"}},
 	}{
-		result, changed := RemoveStrings(s, expects.remove)
-		if changed != expects.changed {
-			t.Errorf("RemoveStrings(%v, %v) expected to return changed=%v", s, expects.remove, expects.changed, )
+		result, removedCount := RemoveStrings(testCase.source, testCase.remove)
+		if removedCount != testCase.removed {
+			t.Errorf("RemoveStrings(%v, %v) expected to return removedCount=%v, got %v", s, testCase.remove, testCase.removed, removedCount)
 		}
-		if !EqualStrings(result, expects.result) {
-			t.Errorf("RemoveStrings(%v, %v) expected to return %v, got %v", s, expects.remove, expects.result, result)
+		if !EqualStrings(result, testCase.result) {
+			t.Errorf("RemoveStrings(%v, %v) expected to return %v, got %v", s, testCase.remove, testCase.result, result)
 		}
 	}
 }
