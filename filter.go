@@ -16,16 +16,16 @@ func FilterInt64s(source, remove []int64) (result []int64, changed bool) {
 }
 
 func RemoveStrings(source, remove []string) (result []string, removed int) {
-	result = make([]string, 0, len(source) - len(remove))
+	result = make([]string, 0, len(source)-len(remove))
+sourceRange:
 	for _, s := range source {
 		for _, r := range remove {
 			if s == r {
 				removed++
-				goto next
+				continue sourceRange
 			}
 		}
 		result = append(result, s)
-	next:
 	}
 	return
 }
