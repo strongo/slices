@@ -1,16 +1,16 @@
 package slices // TODO: Move to a dedicated GitHub repository
 
-func FilterInt64s(source, remove []int64) (result []int64, changed bool) {
+func RemoveInt64s(source, remove []int64) (result []int64, removed int) {
 	result = source[:0]
+sourceRange:
 	for _, s := range source {
 		for _, r := range remove {
 			if s == r {
-				changed = true
-				goto next
+				removed++
+				continue sourceRange
 			}
 		}
 		result = append(result, s)
-	next:
 	}
 	return
 }
