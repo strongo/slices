@@ -37,6 +37,9 @@ func (csv CommaSeparatedUniqueValuesList) Remove(v string) CommaSeparatedUniqueV
 }
 
 func (csv CommaSeparatedUniqueValuesList) Strings() []string {
+	if csv == "" {
+		return []string{}
+	}
 	return strings.Split(string(csv), ",")
 }
 

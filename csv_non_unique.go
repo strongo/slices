@@ -45,6 +45,9 @@ func (csv CommaSeparatedValuesList) Remove(v string) CommaSeparatedValuesList {
 }
 
 func (csv CommaSeparatedValuesList) Strings() []string {
+	if csv == "" {
+		return []string{}
+	}
 	return strings.Split(string(csv), ",")
 }
 
