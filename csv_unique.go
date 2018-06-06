@@ -6,7 +6,7 @@ import (
 
 type CommaSeparatedUniqueValuesList string
 
-func (csv CommaSeparatedUniqueValuesList) Add(v string) CommaSeparatedUniqueValuesList {
+func (csv CommaSeparatedUniqueValuesList) Add(v string, limit int) CommaSeparatedUniqueValuesList {
 	if strings.Contains(v, ",") {
 		panic("contains comma")
 	}
@@ -18,6 +18,9 @@ func (csv CommaSeparatedUniqueValuesList) Add(v string) CommaSeparatedUniqueValu
 		if val == v {
 			return csv
 		}
+	}
+	if limit > 0 && len(vals) > limit {
+		vals = vals[:limit]
 	}
 	return CommaSeparatedUniqueValuesList(strings.Join(append(vals, v), ","))
 }

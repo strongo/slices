@@ -6,13 +6,13 @@ import (
 
 func TestCommaSeparatedUniqueValuesList_Add(t *testing.T) {
 	var csvl CommaSeparatedUniqueValuesList
-	if csvl = csvl.Add("v1"); csvl != "v1" {
+	if csvl = csvl.Add("v1", 0); csvl != "v1" {
 		t.Error("unexpected: " + csvl)
 	}
-	if csvl = csvl.Add("v3"); csvl != "v1,v3" {
+	if csvl = csvl.Add("v3", 0); csvl != "v1,v3" {
 		t.Error("unexpected")
 	}
-	if csvl = csvl.Add("v2"); csvl != "v1,v3,v2" {
+	if csvl = csvl.Add("v2", 0); csvl != "v1,v3,v2" {
 		t.Error("unexpected")
 	}
 }
