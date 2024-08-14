@@ -14,7 +14,7 @@ func (csv CommaSeparatedValuesList) Add(v string) CommaSeparatedValuesList {
 	if csv == "" {
 		return CommaSeparatedValuesList(v)
 	}
-	return CommaSeparatedValuesList(string(csv) +"," + v)
+	return CommaSeparatedValuesList(string(csv) + "," + v)
 }
 
 func (csv CommaSeparatedValuesList) Count() int {
@@ -70,5 +70,5 @@ func removeValFromCSV(s, v string) string {
 	if buf.Len() > 0 {
 		buf.Truncate(buf.Len() - 1)
 	}
-	return string(buf.Bytes())
+	return buf.String()
 }
